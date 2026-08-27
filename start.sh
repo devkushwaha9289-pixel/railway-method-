@@ -5,8 +5,8 @@ set -e
 # HARDCODED LOGIN DETAILS
 # ==============================
 
-SSH_USER="vip"
-SSH_PASSWORD="VIPXOFFICIAL009@a"
+SSH_USER="villagee"
+SSH_PASSWORD="VILLAGEE@121"
 
 # ==============================
 # CREATE SSH USER
