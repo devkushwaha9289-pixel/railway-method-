@@ -1,15 +1,16 @@
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV LANG=C.UTF-8
-ENV LC_ALL=C.UTF-8
 ENV TZ=UTC
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssh-server \
+    xfce4 \
+    xfce4-goodies \
+    xrdp \
+    dbus-x11 \
+    dbus \
     sudo \
-    bash \
-    ca-certificates \
+    openssh-server \
     curl \
     wget \
     git \
@@ -29,15 +30,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     unzip \
     zip \
-    tar \
-    gzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /run/sshd
+    ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY start.sh /usr/local/bin/start.sh
+RUN mkdir -p /run/sshd /run/xrdp
 
-RUN chmod +x /usr/local/bin/start.sh
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-EXPOSE 22
+EXPOSE 22 3389
 
-CMD ["/usr/local/bin/start.sh"]
+CMD ["/start.sh"]
