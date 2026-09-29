@@ -1,44 +1,27 @@
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=UTC
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8080
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    xfce4 \
-    xfce4-goodies \
-    xrdp \
-    dbus-x11 \
-    dbus \
-    sudo \
-    openssh-server \
+    python3 \
+    python3-pip \
     curl \
     wget \
     git \
-    nano \
-    vim \
-    tmux \
-    screen \
-    procps \
-    iproute2 \
-    iputils-ping \
-    dnsutils \
-    net-tools \
-    python3 \
-    python3-pip \
-    python3-venv \
-    python3-dev \
-    build-essential \
+    ca-certificates \
     unzip \
     zip \
-    ca-certificates \
-    && apt-get clean \
+    procps \
+    iproute2 \
+    dnsutils \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /run/sshd /run/xrdp
+WORKDIR /app
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY server.py .
 
-EXPOSE 22 3389
+EXPOSE 8080
 
-CMD ["/start.sh"]
+CMD ["python3", "server.py"]
